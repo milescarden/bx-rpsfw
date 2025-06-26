@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html, #root {
+  height: 100%;
+}
+
+.App {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #f9f9f9;
+  font-family: sans-serif;
+  padding: 20px;
+  user-select: none;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #222;
+  user-select: none;
+}
+
+/* Board container */
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: auto;
+}
+
+/* Each row */
+.hex-row {
+  display: flex;
+  margin-bottom: -12px;
+}
+
+/* Odd rows offset by half hex width */
+.hex-row.offset {
+  margin-left: 34.64px;
+}
+
+/* Hexagon shape - pointy top */
+.hex {
+  position: relative;
+  width: 69.28px;
+  height: 80px;
+  background-color: #ccc;
+  clip-path: polygon(
+    50% 0%, 
+    93.3% 25%, 
+    93.3% 75%, 
+    50% 100%, 
+    6.7% 75%, 
+    6.7% 25%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: default;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease;
+  margin: 0 4px;
+  user-select: none;
+}
+
+/* Hover scale effect */
+.hex:hover {
+  transform: scale(1.1);
+}
+
+/* Emoji color for better contrast */
+.hex span {
+  pointer-events: none;
+  color: black;
+}
+
+/* Player 1 uniform brown color for all pieces */
+.player1 {
+  background-color: #6a4b8c !important; /* purple */
+  color: white !important;
+}
+
+.player2 {
+  background-color: #a9744f !important; /* brown */
+  color: white !important;
+}
+
+/* Selected piece highlight */
+.selected {
+  box-shadow: 0 0 8px 3px #ffcc00 inset;
+  z-index: 10;
+}
+
+/* Valid move highlight */
+.valid-move {
+  box-shadow: 0 0 8px 6px #33cc33 inset;
+  cursor: pointer;
+}
+
+/* Clickable hex cursor */
+.clickable {
+  cursor: pointer;
+}
+
+/* Turn text colors */
+.turn-purple {
+  color: #6a4b8c;
+}
+
+.turn-brown {
+  color: #a9744f;
+}
