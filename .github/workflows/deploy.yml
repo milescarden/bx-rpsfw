@@ -3,7 +3,7 @@ name: Build and Deploy Vite React app to GitHub Pages
 on:
   push:
     branches:
-      - main  # Run workflow when changes are pushed to main
+      - main
 
 jobs:
   build-and-deploy:
@@ -28,5 +28,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
           publish_dir: ./dist
+          publish_branch: gh-pages
+          user_name: milescarden
+          user_email: miles@users.noreply.github.com
