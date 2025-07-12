@@ -138,3 +138,82 @@ body, html, #root {
 .turn-brown {
   color: #a9744f;
 }
+
+/* New container to hold graveyards + board side-by-side */
+.game-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Graveyard container styling */
+.graveyard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 130px;
+  user-select: none;
+}
+
+.graveyard h3 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #444;
+  text-align: center;
+  user-select: none;
+}
+
+/* Captured pieces container */
+.captured-pieces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 6px;
+  background: #eee;
+  border-radius: 6px;
+  box-shadow: inset 0 0 5px #ccc;
+}
+
+/* Player colors for graveyard text */
+.graveyard-purple {
+  color: #6a4b8c;
+}
+
+.graveyard-brown {
+  color: #a9744f;
+}
+
+/* Captured piece hex styling - smaller, no hover, cursor default */
+.captured-pieces .hex {
+  width: 40px;
+  height: 46px;
+  font-size: 28px;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  cursor: default !important;
+  user-select: none;
+  color: inherit !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Override board hex colors for captured pieces to show opponent's colors */
+/* Player 1 captured pieces shown in Player 2 color */
+.captured-pieces .player2 {
+  background-color: #a9744f !important;
+  color: white !important;
+}
+
+/* Player 2 captured pieces shown in Player 1 color */
+.captured-pieces .player1 {
+  background-color: #6a4b8c !important;
+  color: white !important;
+}

@@ -120,6 +120,10 @@ export default function App() {
   const [validMoves, setValidMoves] = useState([]);
   const [winner, setWinner] = useState(null);
 
+  // New states for captured pieces by each player
+  const [capturedByPlayer1, setCapturedByPlayer1] = useState([]); // purple captured pieces (player 2's)
+  const [capturedByPlayer2, setCapturedByPlayer2] = useState([]); // brown captured pieces (player 1's)
+
   const calculateValidMoves = (r, c) => {
     const piece = board[r][c];
     if (!piece || piece.type === "flag") return [];
@@ -161,6 +165,15 @@ export default function App() {
       setSelected(null);
       setValidMoves([]);
 
+      // Add captured piece to graveyard
+      if (targetPiece) {
+        if (targetPiece.player === 1) {
+          setCapturedByPlayer2(prev => [...prev, targetPiece.type]);
+        } else if (targetPiece.player === 2) {
+          setCapturedByPlayer1(prev => [...prev, targetPiece.type]);
+        }
+      }
+
       if (targetPiece?.type === "flag" && targetPiece.player !== movingPiece.player) {
         setWinner(movingPiece.player);
       } else {
@@ -176,35 +189,68 @@ export default function App() {
   return (
     <div className="App">
       <h1 className="title">Bx Rock, Paper, Scissors, Fire, and Water</h1>
-      <h2 className={winner ? (winner === 1 ? "turn-purple" : "turn-brown") : (turn === 1 ? "turn-purple" : "turn-brown")}>
+      <h2
+        className={
+          winner
+            ? winner === 1
+              ? "turn-purple"
+              : "turn-brown"
+            : turn === 1
+            ? "turn-purple"
+            : "turn-brown"
+        }
+      >
         {winner ? `${getPlayerName(winner)} wins! 🎉` : `${getPlayerName(turn)}'s turn`}
       </h2>
 
-      <div className="board">
-        {board.map((row, r) => {
-          const isOffset = r % 2 === 1;
-          return (
-            <div key={r} className={`hex-row${isOffset ? " offset" : ""}`}>
-              {row.map((cell, c) => {
-                const classes = ["hex"];
-                if (cell) classes.push(`player${cell.player}`);
-                if (selected && selected[0] === r && selected[1] === c) classes.push("selected");
-                if (validMoves.some(([vr, vc]) => vr === r && vc === c)) classes.push("valid-move");
-                if ((cell && cell.player === turn) || validMoves.some(([vr, vc]) => vr === r && vc === c))
-                  classes.push("clickable");
-                return (
-                  <div
-                    key={`${r}-${c}`}
-                    className={classes.join(" ")}
-                    onClick={() => handleHexClick(r, c)}
-                  >
-                    {cell ? pieceEmojis[cell.type] : null}
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+      <div className="game-container">
+        {/* Player 1 Graveyard (Purple) */}
+        <div className="graveyard graveyard-purple">
+          <h3>Captured by Purple</h3>
+          <div className="captured-pieces">
+            {capturedByPlayer1.map((type, i) => (
+              <div key={i} className="hex player2">
+                {pieceEmojis[type]}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Board */}
+        <div className="board">
+          {board.map((row, r) => {
+            const isOffset = r % 2 === 1;
+            return (
+              <div key={r} className={`hex-row${isOffset ? " offset" : ""}`}>
+                {row.map((cell, c) => {
+                  const classes = ["hex"];
+                  if (cell) classes.push(`player${cell.player}`);
+                  if (selected && selected[0] === r && selected[1] === c) classes.push("selected");
+                  if (validMoves.some(([vr, vc]) => vr === r && vc === c)) classes.push("valid-move");
+                  if ((cell && cell.player === turn) || validMoves.some(([vr, vc]) => vr === r && vc === c))
+                    classes.push("clickable");
+                  return (
+                    <div key={`${r}-${c}`} className={classes.join(" ")} onClick={() => handleHexClick(r, c)}>
+                      {cell ? pieceEmojis[cell.type] : null}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Player 2 Graveyard (Brown) */}
+        <div className="graveyard graveyard-brown">
+          <h3>Captured by Brown</h3>
+          <div className="captured-pieces">
+            {capturedByPlayer2.map((type, i) => (
+              <div key={i} className="hex player1">
+                {pieceEmojis[type]}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
