@@ -1,3 +1,4 @@
+/* Reset and global styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -71,6 +72,34 @@ body, html, #root {
   transition: transform 0.15s ease;
   margin: 0 4px;
   user-select: none;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* Overlay hex for border */
+.hex::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  background-color: transparent;
+  clip-path: inherit;
+  z-index: -1;
+  transition: background-color 0.3s ease;
+  pointer-events: none;
+}
+
+/* Selected tile highlight */
+.hex.selected::before {
+  background-color: #ffcc00; /* yellow */
+}
+
+/* Valid move highlight */
+.hex.valid-move::before {
+  background-color: #33cc33; /* green */
+  cursor: pointer;
 }
 
 /* Hover scale effect */
@@ -84,27 +113,16 @@ body, html, #root {
   color: black;
 }
 
-/* Player 1 uniform brown color for all pieces */
+/* Player 1 uniform purple color */
 .player1 {
-  background-color: #6a4b8c !important; /* purple */
+  background-color: #6a4b8c !important;
   color: white !important;
 }
 
+/* Player 2 uniform brown color */
 .player2 {
-  background-color: #a9744f !important; /* brown */
+  background-color: #a9744f !important;
   color: white !important;
-}
-
-/* Selected piece highlight */
-.selected {
-  box-shadow: 0 0 8px 3px #ffcc00 inset;
-  z-index: 10;
-}
-
-/* Valid move highlight */
-.valid-move {
-  box-shadow: 0 0 8px 6px #33cc33 inset;
-  cursor: pointer;
 }
 
 /* Clickable hex cursor */
