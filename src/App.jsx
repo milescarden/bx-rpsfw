@@ -3,9 +3,9 @@ import "./App.css";
 
 const pieceEmojis = {
   flag: "🚩",
-  water: "💧",
+  water: "💦",
   fire: "🔥",
-  rock: "🪨",
+  rock: "🧱",
   paper: "📄",
   scissors: "✂️",
 };
